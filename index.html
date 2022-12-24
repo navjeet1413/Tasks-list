@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+    </style>
+</head>
+
+<body>
+
+    <div id="nav">
+        <h1>
+            Tasks
+            <span class="blue">List</span>
+        </h1>
+    </div>
+
+    <div id="container">
+        <div id="btnContainer">
+            <span class="btn-circle" id="addTask">
+                +
+            </span>
+            <span>Add New Task</span>
+        </div>
+        <div id="cardContainer">
+            <p id="noTasks">No Tasks Yet</p>
+        </div>
+    </div>
+
+    <div id="taskInputContainer" class="inputContainer">
+        <div id="taskInput" class="input">
+            <p id="taskInputHeading" class="inputHeading">Add New Task
+                <span id="closeTaskInput" class="closeInput">
+                    <i class="fa-solid fa-xmark"></i>
+                </span>
+            </p>
+            <div id="taskInputContent" class="inputContent">
+                <input type="text" placeholder="Learn C++" id="task"><br>
+                <button class="btn" id="addTaskBtn">+ Add Task</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="itemInputContainer" class="inputContainer">
+        <div id="itemInput" class="input">
+            <p id="itemInputHeading" class="inputHeading">Add New Item
+                <span id="closeItemInput" class="closeInput">
+                    <i class="fa-solid fa-xmark"></i>
+                </span>
+            </p>
+            <div id="itemInputContent" class="inputContent">
+                <input type="text" placeholder="Visit Famous Places" id="item"><br>
+                <div id="addItemBtnContainer">
+                    <button class="btn" id="addItemBtn">+ Add Item</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js.js" ></script>
+
+
+
+</body>
+</html>

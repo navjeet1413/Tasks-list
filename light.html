@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+    </style>
+
+    <style>
+        .blue {
+            color: #00A5EC;
+        }
+
+        .btn-circle {
+            height: 35px;
+            width: 35px;
+            line-height: 37px;
+            font-size: 27px;
+            text-align: center;
+            border-radius: 100%;
+            color: white;
+            margin-right: 10px;
+            background-color: #00A5EC;
+        }
+
+        .btn-circle:hover {
+            line-height: 37px;
+            font-size: 25px;
+            cursor: pointer;
+        }
+
+        html {
+            height: 100%;
+        }
+
+        body {
+            font-family: Poppins !important;
+            margin: 0;
+            height: 100%;
+            user-select: none;
+        }
+
+        #nav {
+            height: 70px;
+            display: flex;
+            align-items: center;
+        }
+
+        #nav>h1 {
+            font-weight: bold;
+            font-size: 30px;
+            color: #424242;
+            margin-left: 8%;
+            margin-right: 8%;
+        }
+
+        #container {
+            min-height: 100%;
+            height: auto;
+            box-shadow: 0px 0px 10px 0px #42424271 inset;
+            background-color: #F7F7F7;
+        }
+
+        #btnContainer {
+            padding-top: 35px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            font-size: 18px;
+            color: #424242;
+            margin-left: 8%;
+            margin-right: 8%;
+        }
+
+        #cardContainer {
+            background: transparent;
+            padding-top: 35px;
+            margin-left: 8%;
+            margin-right: 8%;
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+        }
+
+        #noTasks {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 300px;
+            width: 100%;
+            text-align: center;
+            font-size: 30px;
+            font-weight: bold;
+            color: rgb(190, 190, 190);
+        }
+
+        .card {
+            box-shadow: 0px 0px 10px 0px #42424271;
+            margin: 10px;
+            min-height: 350px;
+            height: auto;
+            width: 350px;
+            background-color: white;
+            border-radius: 10px;
+        }
+
+        .cardHeading {
+            padding: 10px 30px;
+            font-size: 20px;
+            font-weight: 500;
+            border-bottom: 2px solid rgba(211, 211, 211, 0.3);
+        }
+
+        .cardHeading:hover {
+            cursor: pointer;
+        }
+
+        .itemContainer {
+            padding: 15px 30px;
+            font-size: 18px;
+        }
+
+        .item {
+            display: flex;
+            align-items: center;
+            margin-top: 18px;
+            color: #424242;
+        }
+
+        input[type=checkbox] {
+            margin-right: 10px;
+            appearance: none;
+            background-color: #F7F7F7;
+            margin: 0;
+            margin-right: 10px;
+            font: inherit;
+            color: #00A5EC;
+            width: 30px;
+            height: 30px;
+            border-radius: 4px;
+            transform: translateY(-0.075em);
+            box-shadow: 0px 0px 10px 0px #4242421f inset;
+            position: flex;
+        }
+
+        input[type="checkbox"]::after {
+            position: absolute;
+            width: 100%;
+            top: 5px;
+            left: 0%;
+            text-align: center;
+            font-family: "FontAwesome";
+            font-weight: bold;
+            content: "\f00c";
+            color: white;
+            display: inline-block;
+            visibility: hidden;
+        }
+
+        input[type="checkbox"]:hover {
+            background-color: #e9e9e9;
+            cursor: pointer;
+        }
+
+        input[type="checkbox"]:checked {
+            background-color: #d8d8d8;
+        }
+
+        input[type="checkbox"]:checked::after {
+            visibility: visible;
+        }
+
+        @keyframes strike {
+            0% {
+                width: 0;
+            }
+
+            100% {
+                width: 100%;
+            }
+        }
+
+        .strike {
+            position: relative;
+            color: rgb(180, 180, 180);
+        }
+
+        .strike::after {
+            content: ' ';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: rgb(150, 150, 150);
+            animation-name: strike;
+            animation-duration: 0.5s;
+            animation-timing-function: linear;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+        }
+
+        .inputContainer {
+            visibility: hidden;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.25);
+            height: 100%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .input {
+            background-color: white;
+            height: 225px;
+            width: 440px;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .inputHeading {
+            font-size: 18px;
+            padding: 0px 30px;
+            padding-top: 5px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(211, 211, 211, 0.3);
+        }
+
+        .closeInput {
+            position: absolute;
+            right: 30px;
+            font-size: 20px;
+            color: rgba(211, 211, 211);
+        }
+
+        .closeInput:hover {
+            cursor: pointer;
+        }
+
+        .inputContent {
+            padding: 10px 30px;
+        }
+
+        input[type=text] {
+            font-family: Poppins;
+            background-color: #F7F7F7;
+            outline: none;
+            border: 0;
+            padding: 10px 20px;
+            width: 340px;
+            margin-top: 10px;
+            border-radius: 5px;
+            font-size: 15px;
+        }
+
+        .btn {
+            outline: none;
+            border: 0;
+            background-color: #00A5EC;
+            color: white;
+            font-size: 14px;
+            border-radius: 4px;
+            padding: 10px 30px;
+            font-family: Poppins;
+            margin-top: 20px;
+            position: absolute;
+            right: 30px;
+        }
+
+        .btn:hover {
+            cursor: pointer;
+            box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.15) inset;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div id="nav">
+        <h1>
+            Tasks
+            <span class="blue">List</span>
+        </h1>
+    </div>
+
+    <div id="container">
+        <div id="btnContainer">
+            <span class="btn-circle" id="addTask">
+                +
+            </span>
+            <span>Add New Task</span>
+        </div>
+        <div id="cardContainer">
+            <p id="noTasks">No Tasks Yet</p>
+        </div>
+    </div>
+
+    <div id="taskInputContainer" class="inputContainer">
+        <div id="taskInput" class="input">
+            <p id="taskInputHeading" class="inputHeading">Add New Task
+                <span id="closeTaskInput" class="closeInput">
+                    <i class="fa-solid fa-xmark"></i>
+                </span>
+            </p>
+            <div id="taskInputContent" class="inputContent">
+                <input type="text" placeholder="Learn C++" id="task"><br>
+                <button class="btn" id="addTaskBtn">+ Add Task</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="itemInputContainer" class="inputContainer">
+        <div id="itemInput" class="input">
+            <p id="itemInputHeading" class="inputHeading">Add New Item
+                <span id="closeItemInput" class="closeInput">
+                    <i class="fa-solid fa-xmark"></i>
+                </span>
+            </p>
+            <div id="itemInputContent" class="inputContent">
+                <input type="text" placeholder="Visit Famous Places" id="item"><br>
+                <div id="addItemBtnContainer">
+                    <button class="btn" id="addItemBtn">+ Add Item</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var addTaskBtn = document.getElementById("addTaskBtn");
+        var taskInput = document.getElementById("taskInputContainer");
+        var addItemBtn = document.getElementById("addItemBtn");
+        var itemInput = document.getElementById("itemInputContainer");
+        var closeTaskInput = document.getElementById("closeTaskInput");
+        var closeItemInput = document.getElementById("closeItemInput");
+        var cardContainer = document.getElementById("cardContainer");
+        var noTasks = document.getElementById("noTasks");
+
+        function openAddTask() {
+            taskInput.style.visibility = "visible";
+        }
+
+        function closeAddTask() {
+            taskInput.style.visibility = "hidden";
+        }
+
+        function getTask() {
+            var task = document.getElementById("task");
+            var res = task.value;
+            task.value = "";
+            return res;
+        }
+
+        function getItem() {
+            var item = document.getElementById("item");
+            var res = item.value;
+            item.value = "";
+            return res;
+        }
+
+        function openAddItem(card) {
+            itemInput.style.visibility = "visible";
+            addItemBtn.addEventListener("click", () => addItem(card));
+        }
+
+        function closeAddItem() {
+            var newBtn = `
+            <button class="btn" id="addItemBtn">+ Add Item</button>
+            `;
+            addItemBtn.parentElement.innerHTML = newBtn;
+            addItemBtn = document.getElementById("addItemBtn");
+            itemInput.style.visibility = "hidden";
+        }
+
+        function addItem(card) {
+            var currentTask = card.parentElement;
+            var itemContainer = currentTask.getElementsByClassName("itemContainer")[0];
+
+            var item = document.createElement("div");
+            item.className = "item";
+            var itemContent = `
+                    <input type="checkbox" id="">
+                    <span>${getItem()} &nbsp;</span>
+                `;
+            item.innerHTML = itemContent;
+            itemContainer.appendChild(item);
+
+            item.querySelector("input").addEventListener("click", () => removeItem(item));
+
+            closeAddItem();
+        }
+
+        function removeItem(item) {
+            item.querySelector("input").disabled = true;
+            item.querySelector("span").classList.add("strike");
+        }
+
+        function addTask(title) {
+            var card = document.createElement("div");
+            card.className = "card";
+            var cardContent = `
+            <div class="cardHeading blue">
+                <p>${title}</p>
+            </div>
+            <div class="itemContainer">
+            </div>
+        `;
+            card.innerHTML = cardContent;
+            cardContainer.appendChild(card);
+
+            var card = document.querySelectorAll(".cardHeading");
+            card = card[card.length - 1];
+            card.addEventListener("click", () => openAddItem(card));
+            noTasks.style.display = "none";
+        }
+
+        document.getElementById("addTask").addEventListener("click", openAddTask);
+        closeTaskInput.addEventListener("click", closeAddTask);
+
+        closeItemInput.addEventListener("click", closeAddItem);
+
+        addTaskBtn.addEventListener("click", function () {
+            addTask(getTask());
+            closeAddTask();
+            task.value = "";
+        })
+    </script>
+
+</body>
+
+</html>
